@@ -1,0 +1,13 @@
+FROM python:3.10.5-slim
+
+ARG dir=./web-server/src
+ENV APP_PATH=/app
+ARG model_dir=model
+
+WORKDIR ${APP_PATH}
+
+COPY ${dir}/ ./
+
+RUN mkdir ${model_dir} && pip install --no-cache-dir --upgrade -r ./requirements.txt
+
+ENTRYPOINT ["uvicorn", "main:app"]
